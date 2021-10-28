@@ -1,0 +1,82 @@
+---
+title: "Simulation 0/10/11 - Durchschnitt"
+output: html_notebook
+---
+
+# Simulation
+
+```{r}
+sim <- c (0, 10, 11)
+```
+
+## Mittelwert
+
+```{r}
+Mittel <- function (v) {
+    mean (v)
+}
+```
+
+```{r}
+Mean <- Mittel (sim)
+```
+
+## Varianz
+
+```{r}
+Varianz <- function (v) {
+    Mittel ((v - Mittel (v)) ^  2)
+}
+```
+
+```{r}
+Var <- Varianz (sim)
+```
+# m mal simulieren
+
+```{r}
+m_mal_sim <- function (m) {
+    sample (sim, size = m, replace = TRUE)
+}
+```
+
+```{r}
+m_mal_sim (10)
+```
+
+## Mittelwert von n Simulationen berechnen
+
+```{r}
+m_mal_sim_n_mean <- function (m, n) {
+    s <- rep (0, m)
+    for (i in 1:n) {
+        t <- s + m_mal_sim (m)
+        s <- t
+    }
+    s / n
+}
+```
+
+```{r}
+sim.mean <- m_mal_sim_n_mean (10, 2)
+```
+
+```{r}
+hist (sim.mean)
+```
+
+# Versuche
+
+```{r}
+par (mfrow = c (2,2)) 
+
+a <- 0
+b <- 14
+x <- seq (a, b, 0.1)
+
+for (i in c (16, 64, 256, 1024)) {
+    v <- m_mal_sim_n_mean (1000, i)
+    hist (v, breaks = seq (0, 12, 4 / sqrt (i)), freq = FALSE)
+    curve(dnorm (x, mean = Mean, sd = sqrt (Var / i)), col = "red", add = TRUE)
+}
+```

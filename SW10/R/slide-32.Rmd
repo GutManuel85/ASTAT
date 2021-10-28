@@ -1,0 +1,14 @@
+---
+title: "SW 10 / Slide 32"
+output: html_notebook
+---
+Daten
+```{r}
+vorher <- c (25, 25, 27, 44, 30, 67, 53, 53, 52, 60, 28)
+nachher <- c (27, 29, 37, 56, 46, 82, 57, 80, 61, 59, 43)
+```
+t-Test
+```{r}
+t.test (nachher, vorher, alternative = "two.sided", mu = 0, paired = TRUE, conf.level = 0.95)
+```
+

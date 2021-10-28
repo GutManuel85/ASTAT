@@ -1,0 +1,33 @@
+---
+title: "ASTAT, SW9 / z-Test / Beispiel Brauerei"
+output: html_notebook
+---
+Mittelwert
+```{r}
+Mu <- 500
+```
+Standardabweichung
+```{r}
+Sigma <- 1
+```
+Umfang der Stichprobe
+```{r}
+n <- 100
+```
+Mittelwert der Stichprobe
+```{r}
+mu <- 499.84
+```
+Signifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Verwerfungsbereich
+```{r}
+K <- qnorm (p = c (alpha / 2, 1 - alpha / 2), mean = Mu, sd = Sigma / sqrt (n))
+K
+```
+Verwerfen?
+```{r}
+mu < K [1] | mu > K [2]
+```

@@ -1,0 +1,31 @@
+---
+title: "SW 10 / Slide 13"
+output: html_notebook
+---
+Erwartungswert
+```{r}
+mu <- 5
+```
+Standardabweichung
+```{r}
+sigma = 2
+```
+Signifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Anzahl Experimente
+```{r}
+n <- 1000
+```
+Berechnung
+```{r}
+for (i in 1:20)
+{
+    r <- rnorm (n = n, mean = mu, sd = sigma)
+    qmin <- qnorm (p = alpha / 2, mean = r, sd = sigma)
+    qmax <- qnorm (p = 1 - alpha / 2, mean = r, sd = sigma)
+    cat (sum (mu < qmin | mu > qmax), " ")
+}
+```
+```

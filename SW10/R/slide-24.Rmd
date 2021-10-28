@@ -1,0 +1,13 @@
+---
+title: "SW 10 / Slide 24"
+output: html_notebook
+---
+Daten
+```{r}
+waageA <- c (79.98, 80.04, 80.02, 80.04, 80.03, 80.03, 80.04, 79.97, 80.05, 80.03, 80.02, 80, 80.02)
+```
+Wilcoxon-Test
+```{r}
+wilcox.test (waageA, mu = 80, alternative = "two.sided", exact = FALSE)
+```
+

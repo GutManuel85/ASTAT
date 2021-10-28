@@ -1,0 +1,254 @@
+---
+title: "Bestimmtheitsmass (R^2) - Motivation"
+output: html_notebook
+---
+Zur besseren Darstellung der Abbildungen
+```{r}
+library (repr)
+```
+Vor dem ersten Aufruf installieren: install.packages ("repr")
+
+# Bestimmtheitsmass eines exakt linearen Modells
+```{r echo = FALSE}
+options (repr.plot.width = 10, repr.plot.height = 6)
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+```
+```{r echo = FALSE}
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+abline (mean (y), 0, col = "darkseagreen")
+for (i in 1:20)
+{
+    lines (c (x[i], x[i]), c (x[i], mean(y)), col = "red")
+}
+text (1, 6, "Mittelwert y")
+```
+```{r warning = false}
+summary (lm (y ~ x)) $ r.squared
+```
+# Bestimmtheitsmass eines annaehernd linearen Modells
+```{r echo = FALSE}
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = .3)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+```
+```{r}
+summary (lm (y ~ x)) $ r.squared
+```
+# Bestimmtheitsmass als Quotient aus Modell- und Stichprobenvarianz
+```{r echo = FALSE}
+options (repr.plot.width = 20, repr.plot.height = 7)
+par (mfrow = c (1, 2))
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = .3)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (a + b * x [i], y.mean), col = "red", lwd = 3)
+}
+var.mod <- var (a + b * x)
+text (0.5, 10, "Varianz Modell:", cex = 1.0, adj = 0)
+text (0.5, 9, var.mod, cex = 1.0, adj = 0)
+text (0.5, 6, "Mittelwert y", cex = 1.0, adj = 0)
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = .3)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (y [i], y.mean), col = "magenta", lwd = 3)
+}
+var.samp <- var (y)
+text (0.5, 10, "Varianz Sample:", cex = 1.0, adj = 0)
+text (0.5, 9, var.samp, cex = 1.0, adj = 0)
+text (0.5, 6, "Mittelwert y", cex = 1.0, adj = 0)
+```
+```{r}
+summary (lm (y ~ x)) $ r.squared
+
+var.mod
+var.samp
+var.mod / var.samp
+```
+# Bestimmtheitsmass aus der Differenz zwischen Modell und Stichprobe
+## Stark linearer Zusammenhang
+```{r echo = FALSE}
+options (repr.plot.width = 20, repr.plot.height = 8)
+par (mfrow = c (1, 2))
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = .3)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (y [i], y.mean), col = "magenta", lwd = 3)
+}
+var.mod <- var (a + b * x)
+text (0.5, 10, "Varianz Sample:", cex = 1.0, adj = 0)
+text (0.5, 9, var.mod, cex = 1.0, adj = 0)
+text (0.5, 6,"Mittelwert y", cex = 1.0, adj = 0)
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = .3)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (y [i], a + b * x [i]), col = "brown", lwd=3)
+}
+var.dif <- var (y - (a + b * x))
+text (0.5, 10, "Varianz Differenz:", cex = 1.0, adj = 0)
+text (0.5, 9, var.dif,cex = 1.0, adj = 0)
+text (0.5, 6, "Mittelwert y", cex = 1.0, adj = 0)
+```
+```{r}
+summary (lm (y ~ x)) $ r.squared
+1 - var.dif / var.samp
+```
+## Schwach linearer Zusammenhang
+```{r echo = FALSE}
+options (repr.plot.width = 10, repr.plot.height = 8)
+set.seed (6)
+
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = 2)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (y [i], y.mean), col = "red", lwd = 3)
+}
+text (0.5, 7.0, "Mittelwert y", cex = 1.0, adj = 0)
+```
+```{r echo = FALSE}
+options (repr.plot.width = 20, repr.plot.height = 8)
+par (mfrow = c (1, 2))
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = 2)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (y [i], y.mean), col = "magenta", lwd = 3)
+}
+var.mod <- var (a + b * x)
+text (0.5, 12.5, "Varianz Sample:", cex = 1.0, adj = 0)
+text (0.5, 11.5, var.samp, cex = 1.0, adj = 0)
+text (0.5, 7.0, "Mittelwert y", cex = 1.0, adj = 0)
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = 2)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c (y [i], a + b * x [i]),col = "brown",lwd = 3)
+}
+var.dif <- var (y - (a + b * x))
+var.samp <- var (y)
+
+text (0.5, 12.5, "Varianz Differenz:", cex = 1.0, adj = 0)
+text (0.5, 11.5, var.dif, cex = 1.0, adj = 0)
+text (0.5, 7.0, "Mittelwert y", cex = 1.0, adj = 0)
+```
+```{r}
+summary (lm (y ~ x)) $ r.squared
+1 - var.dif / var.samp
+```
+# Kein linearer Zusammenhang
+```{r echo = FALSE}
+options (repr.plot.width = 20, repr.plot.height = 8)
+par (mfrow = c (1, 2))
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = 5)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i],x [i]), c (y [i], y.mean), col = "magenta", lwd = 3)
+}
+var.mod <- var (a + b * x)
+text (0.5, 18, "Varianz Sample:", cex = 1.0, adj = 0)
+text (0.5, 16, var.samp, cex = 1.0, adj = 0)
+text (0.5, 8.0, "Mittelwert y", cex = 1.0, adj = 0)
+
+set.seed (6)
+x <- runif (min = 0, max = 10, n = 20)
+y <- x + rnorm (n = 20, mean = 0, sd = 5)
+plot (x, y, col = "blue", pch = 16)
+abline (lm (y ~ x), col = "orange")
+y.mean <- mean (y)
+a <- lm (y ~ x) $ coefficients [1]
+b <- lm (y ~ x) $ coefficients [2]
+lines (c (0, 10), c (y.mean, y.mean))
+for (i in 1:20)
+{
+    lines (c (x [i], x [i]), c( y [i], a + b * x [i]), col = "brown", lwd = 3)
+}
+var.dif <- var (y - (a + b * x))
+var.samp <- var (y)
+text (0.5, 18, "Varianz Differenz:", cex = 1.0, adj = 0)
+text (0.5, 16, var.dif, cex = 1.0, adj = 0)
+text (0.5, 8.0,"Mittelwert y", cex = 1.0, adj = 0)
+```
+```{r}
+summary (lm (y ~ x)) $ r.squared
+1 - var.dif / var.samp
+```
+
+

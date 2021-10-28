@@ -1,0 +1,127 @@
+---
+title: "Mehrmals Wuerfeln - Augensumme und Durchschnitt"
+output: html_notebook
+---
+
+# Wuerfel
+
+```{r}
+wuerfel <- 1:6
+```
+
+## Mittelwert
+
+```{r}
+Mittel <- function (v) {
+    mean (v)
+}
+```
+
+```{r}
+Mittel (wuerfel)
+```
+
+## Varianz
+
+```{r}
+Varianz <- function (v) {
+    Mittel ((v - Mittel (v)) ^  2)
+}
+```
+
+```{r}
+Varianz (wuerfel)
+```
+# m mal wuerfeln
+
+```{r}
+m_mal_wuerfeln <- function (m) {
+    sample (wuerfel, size = m, replace = TRUE)
+}
+```
+
+## Funktion auf m Wuerfe anwenden
+
+```{r}
+f_von_m_mal_wuerfeln <- function (f, m) {
+    s <- m_mal_wuerfeln (m)
+    f (s)
+}
+```
+
+## Funktionsanwendung auf m Wuerfe n mal wiederholen
+
+```{r}
+f_von_m_mal_wuerfeln_n_mal_wiederholen <- function (f, m, n) {
+    s <- c ()
+    for (i in 1:n) { s [i] <- f_von_m_mal_wuerfeln (f, m) }
+    s
+}
+```
+
+# Augensummen
+
+## Augensumme von 1000 mal 10 Wuerfen
+
+```{r}
+s10 <- f_von_m_mal_wuerfeln_n_mal_wiederholen (sum, 10, 1000)
+```
+
+## Augensumme von 1000 mal 40 Wuerfen
+
+```{r}
+s40 <- f_von_m_mal_wuerfeln_n_mal_wiederholen (sum, 40, 1000)
+```
+
+## Histogramme der Augensummen
+
+```{r}
+par (mfrow = c (1,2)) 
+hist (s10)
+hist (s40)
+```
+
+## Mittelwerte der Augensummen
+
+```{r}
+c (Mittel (s10), Mittel (s40))
+```
+
+## Varianzen der Augensummen
+
+```{r}
+c (Varianz (s10), Varianz (s40))
+```
+
+# Durchschnitte
+
+## Durchschnitt von 1000 mal 10 Wuerfen
+
+```{r}
+m10 <- f_von_m_mal_wuerfeln_n_mal_wiederholen (mean, 10, 1000)
+```
+
+## Durchschnitt von 1000 mal 40 Wuerfen
+
+```{r}
+m40 <- f_von_m_mal_wuerfeln_n_mal_wiederholen (mean, 40, 1000)
+```
+
+## Histogramme der Durchschnitte
+
+```{r}
+par (mfrow = c (1,2)) 
+hist (m10)
+hist (m40)
+```
+
+## Mittelwerte der Durchschnitte
+
+```{r}
+c (Mittel (m10), Mittel (m40))
+```
+## Varianzen der Durchschnitte
+
+```{r}
+c (Varianz (m10), Varianz (m40))
+```

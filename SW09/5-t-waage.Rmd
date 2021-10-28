@@ -1,0 +1,48 @@
+---
+title: "ASTAT, SW9 / t-Test / Beispiel Waage"
+output: html_notebook
+---
+Erwartungswert
+```{r}
+Mu <- 80
+```
+Daten
+```{r}
+waageA <- c (79.98, 80.04, 80.02, 80.04, 80.03, 80.03, 80.04, 79.97, 80.05, 80.03, 80.02, 80, 80.02)
+```
+Mittelwert
+```{r}
+mu <- mean (waageA)
+mu
+```
+Standardabweichung
+```{r}
+sigma <- sd (waageA)
+sigma
+```
+Umfang der Stichprobe
+```{r}
+n <- length (waageA)
+n
+```
+Sigifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Konfidenzintervall
+```{r}
+t <- (mu - Mu) * sqrt (n) / sigma
+cat ("t = ", t, "\n")
+tmin <- qt (alpha / 2, df = n - 1)
+tmax <- qt (1 - alpha / 2, df = n - 1)
+t.interval = c (tmin, tmax)
+cat ("t interval = [", t.interval [1], ", ", t.interval [2], "]\n")
+x.interval = t.interval * sigma / sqrt (n) + mu
+cat ("x interval = [", x.interval [1], ", ", x.interval [2], "]\n")
+p <- 2 * (1 - pt (t, df = n - 1))
+cat ("p = ", p, "\n")
+```
+t-Test
+```{r}
+t.test (waageA, mu = Mu)
+```

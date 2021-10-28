@@ -1,0 +1,34 @@
+---
+title: "ASTAT, SW9 / z-Test / Beispiel Waage"
+output: html_notebook
+---
+Mittelwert
+```{r}
+Mu <- 80
+```
+Standardabweichung
+```{r}
+Sigma <- 0.02
+```
+Signifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Umfaenge der Stichproben
+```{r}
+n <- c (2, 4, 6, 8)
+```
+Mittelwert der Stichprobe
+```{r}
+mu <- 79.98
+```
+p-Werte
+```{r}
+p <- pnorm (q = mu, mean = Mu, sd = Sigma / sqrt (n))
+p
+```
+Verwerfen?
+```{r}
+p < alpha / 2
+```
+

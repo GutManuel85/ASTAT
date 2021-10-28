@@ -1,0 +1,33 @@
+---
+title: "ASTAT, SW9 / z-Test / Beispiel Frauen"
+output: html_notebook
+---
+Mittelwert
+```{r}
+Mu <- 180
+```
+Standardabweichung
+```{r}
+Sigma <- 10
+```
+Signifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Umfaeng der Stichprobe
+```{r}
+n <- 8
+```
+Mittelwert der Stichprobe
+```{r}
+mu <- 171.54
+```
+Verwerfungsbereich
+```{r}
+qnorm (alpha, mean = Mu, sd = Sigma / sqrt (n))
+```
+p-Wert
+```{r}
+p <- pnorm (mu, mean = Mu, sd = Sigma / sqrt (n))
+p
+```

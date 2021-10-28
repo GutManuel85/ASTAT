@@ -1,0 +1,111 @@
+---
+title: "ASTAT, SW 07, Aufgabe 7.2"
+output: html_notebook
+---
+
+### Mittelwert [kg]
+
+```{r}
+M <- 4
+```
+
+### Standardabweichung [kg]
+
+```{r}
+S <- 1.25
+```
+
+### Dichtefunktion: D
+
+```{r}
+D <- function (x) {
+    dnorm (x, mean = M, sd = S)
+}
+```
+
+### Flaechenfunktion: P
+
+```{r}
+P <- function (x) {
+    pnorm (q = x, mean = M, sd = S)
+}
+```
+
+### Qantile: Q
+
+```{r}
+Q <- function (x) {
+    qnorm (x, mean = M, sd = S)
+}
+```
+
+### Dichtefunktion zeichnen
+
+```{r}
+Xmin <- 0
+Xmax <- 8
+
+Dplot <- function () {
+    xtab <- seq (Xmin, Xmax, length.out = 100)
+    ytab <- D (xtab)
+    plot (xtab, ytab, type = "l")
+}
+
+Dplot ()
+```
+
+### Flaeche zeichnen
+
+```{r}
+Fplot <- function (xmin, xmax) {
+    xtab <- seq (xmin, xmax, length.out = 100)
+    ytab <- D (xtab)
+    polygon (x = c (xmin, xtab, xmax, xmin), y = c (0, ytab, 0, 0), density = 10)
+}
+```
+
+# a)
+
+```{r}
+Dplot ()
+Fplot (Xmin, 2.5)
+```
+
+```{r}
+P (2.5)
+```
+
+```{r}
+Dplot ()
+Fplot (5, Xmax)
+```
+
+```{r}
+1 - P (5)
+```
+# b)
+
+
+```{r}
+x1 <- 3
+x2 <- 4.5
+(P (x2) - P (x1)) * 100
+```
+```{r}
+Dplot()
+Fplot (x1, x2)
+```
+
+
+# c)
+
+```{r}
+x3 <- Q (1 - 2 / 100)
+x3
+```
+
+```{r}
+Dplot ()
+Fplot (x3, Xmax)
+```
+

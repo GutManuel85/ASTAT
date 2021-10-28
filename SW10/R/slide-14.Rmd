@@ -1,0 +1,46 @@
+---
+title: "SW 10 / Slide 14"
+output: html_notebook
+---
+Erwartungswert
+```{r}
+mu <- 5
+```
+Standardabweichung
+```{r}
+sigma = 2
+```
+Signifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Anzahl Experimente
+```{r}
+n <- 100
+```
+Berechnung
+```{r}
+r <- rnorm (n = n, mean = mu, sd = sigma)
+qmin <- qnorm (p = alpha / 2, mean = r, sd = sigma)
+qmax <- qnorm (p = 1 - alpha / 2, mean = r, sd = sigma)
+```
+Zeichnung
+```{r}
+plot (NULL, xlim = c (1, n), ylim = c (mu - 10, mu + 10), xlab = "", ylab = "")
+lines(c (1, n), c (mu, mu), lwd = 3, col = "blue")
+for (i in 1:n) 
+{
+    if (qmin [i] <= mu & mu <= qmax [i])
+    {
+        lines (c (i, i), c (qmin [i], qmax [i]))
+    }
+    else
+    {
+        lines(c (i, i), c (qmin [i], qmax [i]), col = "red", lwd = 3)       
+    }
+}
+```
+
+```
+}
+-

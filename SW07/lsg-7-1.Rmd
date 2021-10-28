@@ -1,0 +1,111 @@
+---
+title: "ASTAT, SW 07, Aufgabe 7.1"
+output: html_notebook
+---
+
+### Mittelwert [cm]
+
+```{r}
+M <- 180
+```
+
+### Standardabweichung [cm]
+
+```{r}
+S <- 7.4
+```
+
+### Dichtefunktion: D
+
+```{r}
+D <- function (x) {
+    dnorm (x, mean = M, sd = S)
+}
+```
+
+### Flaechenfunktion: P
+
+```{r}
+P <- function (x) {
+    pnorm (q = x, mean = M, sd = S)
+}
+```
+
+### Qantile: Q
+
+```{r}
+Q <- function (x) {
+    qnorm (x, mean = M, sd = S)
+}
+```
+
+### Dichtefunktion zeichnen
+
+```{r}
+Xmin <- 150
+Xmax <- 210
+
+Dplot <- function () {
+    xtab <- seq (Xmin, Xmax, length.out = 100)
+    ytab <- D (xtab)
+    plot (xtab, ytab, type = "l")
+}
+
+Dplot ()
+```
+
+### Flaeche zeichnen
+
+```{r}
+Fplot <- function (xmin, xmax) {
+    xtab <- seq (xmin, xmax, length.out = 100)
+    ytab <- D (xtab)
+    polygon (x = c (xmin, xtab, xmax, xmin), y = c (0, ytab, 0, 0), density = 10)
+}
+```
+
+# a)
+
+```{r}
+Dplot ()
+Fplot (185, Xmax)
+```
+
+```{r}
+1 - P (185)
+```
+
+```{r}
+Dplot ()
+Fplot (170, 180)
+```
+
+```{r}
+P (180) - P (170)
+```
+# b)
+
+
+```{r}
+q1 <- Q (0.25)
+q3 <- Q (0.75)
+c (q1, q3)
+```
+```{r}
+Dplot()
+Fplot (q1, q3)
+```
+
+
+# c)
+
+```{r}
+q <- Q (1 - 0.05)
+q
+```
+
+```{r}
+Dplot ()
+Fplot (q, Xmax)
+```
+

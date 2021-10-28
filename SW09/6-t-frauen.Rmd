@@ -1,0 +1,46 @@
+---
+title: "ASTAT, SW9 / t-Test / Beispiel Frauen"
+output: html_notebook
+---
+Erwartungswert
+```{r}
+Mu <- 180
+```
+Daten
+```{r}
+groesse <- c (165.7, 156.7, 171.7, 180.3, 163.2, 166.7, 149.9, 170.4, 163.4, 152.5)
+```
+Mittelwert
+```{r}
+mu <- mean (groesse)
+mu
+```
+Standardabweichung
+```{r}
+sigma <- sd (groesse)
+sigma
+```
+Umfang der Stichprobe
+```{r}
+n <- length (groesse)
+n
+```
+Sigifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Konfidenzintervall
+```{r}
+t <- (mu - Mu) * sqrt (n) / sigma
+cat ("t = ", t, "\n")
+tmax <- qt (1 - alpha, df = n - 1)
+cat ("tmax = ", tmax, "\n")
+xmax = tmax * sigma / sqrt (n) + mu
+cat ("xmax = ", xmax, "\n")
+p <- pt (t, df = n - 1)
+cat ("p = ", p, "\n")
+```
+t-Test
+```{r}
+t.test (groesse, mu = Mu, alternative = "less")
+```

@@ -1,0 +1,48 @@
+---
+title: "ASTAT, SW9 / t-Test / Beispiel"
+output: html_notebook
+---
+Erwartungswert
+```{r}
+Mu <- 5
+```
+Daten
+```{r}
+x <- c (5.9, 3.4, 6.6, 6.3, 4.2, 2.0, 6.0, 4.8, 4.2, 2.1, 8.7, 4.4, 5.1, 2.7, 8.5, 5.8, 4.9, 5.3, 5.5, 7.9)
+```
+Mittelwert
+```{r}
+mu <- mean (x)
+mu
+```
+Standardabweichung
+```{r}
+sigma <- sd (x)
+sigma
+```
+Umfang der Stichprobe
+```{r}
+n <- length (x)
+n
+```
+Sigifikanzniveau
+```{r}
+alpha <- 0.05
+```
+Konfidenzintervall
+```{r}
+t <- (mu - Mu) * sqrt (n) / sigma
+cat ("t = ", t, "\n")
+tmin <- qt (alpha / 2, df = n - 1)
+tmax <- qt (1 - alpha / 2, df = n - 1)
+t.interval = c (tmin, tmax)
+cat ("t interval = [", t.interval [1], ", ", t.interval [2], "]\n")
+x.interval = t.interval * sigma / sqrt (n) + mu
+cat ("x interval = [", x.interval [1], ", ", x.interval [2], "]\n")
+p <- 2 * (1 - pt (t, df = n - 1))
+cat ("p = ", p, "\n")
+```
+t-Test
+```{r}
+t.test (x, mu = Mu)
+```
